@@ -1002,8 +1002,22 @@
         }
 
         // 6. RSVP Modal
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyT6KwNQs_9SRPaDp821HWR6Yn_-oTKF-uJ6zMkdNyqFvLU4FZnlboSSVzy-c7T8LbQFQ/exec';
         function handleFormSubmit(event) {
             event.preventDefault();
+
+            const formData = new URLSearchParams();
+            formData.append('fullName', document.getElementById('fullName').value);
+            formData.append('attending', document.getElementById('attending').value);
+            formData.append('guestCount', document.getElementById('guestCount').value);
+            formData.append('dietary', document.getElementById('dietary').value);
+
+            fetch(GOOGLE_SCRIPT_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                body: formData
+            }).catch(() => {});
+
             document.getElementById('thankYouModal').style.display = 'flex';
         }
 
